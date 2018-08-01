@@ -165,8 +165,6 @@ int openPoseTutorialPose1()
         poseRenderer.renderPose(outputArray, poseKeypoints, scaleInputToOutput);
         // Step 6 - OpenPose output format to cv::Mat
         auto outputImage = opOutputToCvMat.formatToCvMat(outputArray);
-        cv::imshow("Image",outputImage);
-
 
         const auto now0 = std::chrono::high_resolution_clock::now();
         const auto totalTimeSec0 = (double)std::chrono::duration_cast<std::chrono::nanoseconds>(now0-timerBegin).count() * 1e-9;
