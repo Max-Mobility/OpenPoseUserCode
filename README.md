@@ -10,11 +10,17 @@ You can quickly add your custom code into this folder so that quick prototypes c
 
 ## How-to
 1. Install/compile OpenPose as usual.
-2. Add your custom *.cpp / *.hpp files here.
-3. Add the name of your custom *.cpp / *.hpp files at the top of the [CMakeLists.txt](./CMakeLists.txt) file. Add any external libraries that are needed here as well.
-4. Commit and push new files
-5. Clone this repo into `examples/user_code`
-6. Re-compile OpenPose.
+2. Clone this repo into `examples/user_code`
+```
+#from open pose root directory
+cd examples
+#remove the user_code folder if it already exists
+rm -rf user_code
+
+git clone https://github.com/Max-Mobility/OpenPoseUserCode.git user_code
+```
+
+3. Re-compile OpenPose.
 ```
 #from openpose root directory
 cd build/
