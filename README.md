@@ -8,7 +8,7 @@ You can quickly add your custom code into this folder so that quick prototypes c
 
 
 
-## How-to
+## Building Custom Code
 1. [Install/compile OpenPose as usual](https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/installation.md#installation)
 2. Clone this repo into `examples/user_code`
 ```
@@ -27,8 +27,12 @@ cd build/
 make -j`nproc`
 ```
 
+## Adding New Code
 
-## Running your Custom Code
+1. Add all `*.cpp/*.hpp` files into the user_code directory
+2. Modify the local CMakelists.txt to include the custom code. Be sure to add any necessary link libraries
+
+## Running Your Custom Code
 Run:
 ```
 #from openpose root directory
