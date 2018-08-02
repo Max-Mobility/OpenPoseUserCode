@@ -1,13 +1,3 @@
-// ------------------------- OpenPose Library Tutorial - Pose - Example 1 - Extract from Image -------------------------
-// This first example shows the user how to:
-// 1. Load an image (`filestream` module)
-// 2. Extract the pose of that image (`pose` module)
-// 3. Render the pose on a resized copy of the input image (`pose` module)
-// 4. Display the rendered pose (`gui` module)
-// In addition to the previous OpenPose modules, we also need to use:
-// 1. `core` module: for the Array<float> class that the `pose` module needs
-// 2. `utilities` module: for the error & logging functions, i.e. op::error & op::log respectively
-
 // 3rdparty dependencies
 // GFlags: DEFINE_bool, _int32, _int64, _uint64, _double, _string
 #include <gflags/gflags.h>
