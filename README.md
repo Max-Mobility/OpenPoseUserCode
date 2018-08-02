@@ -9,7 +9,7 @@ You can quickly add your custom code into this folder so that quick prototypes c
 
 
 ## How-to
-1. Install/compile OpenPose as usual.
+1. [Install/compile OpenPose as usual](https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/installation.md#installation)
 2. Clone this repo into `examples/user_code`
 ```
 #from open pose root directory
