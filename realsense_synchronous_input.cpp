@@ -246,7 +246,7 @@ struct UserDatum : public op::Datum
 class WUserInput : public op::WorkerProducer<std::shared_ptr<std::vector<UserDatum>>>
 {
  public:
-  WUserInput(const std::string& directoryPath) 
+  WUserInput()
     {
 	  //Add desired streams to configuration
 	  mCfg.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 30);
@@ -342,11 +342,6 @@ int openPoseDemo()
 	  const auto faceNetInputSize = op::flagsToPoint(FLAGS_face_net_resolution, "368x368 (multiples of 16)");
 	  // handNetInputSize
 	  const auto handNetInputSize = op::flagsToPoint(FLAGS_hand_net_resolution, "368x368 (multiples of 16)");
-	  // producerType
-	  const auto producerSharedPtr = op::flagsToProducer(FLAGS_image_dir, FLAGS_video, FLAGS_ip_camera, FLAGS_camera,
-														 FLAGS_flir_camera, FLAGS_camera_resolution, FLAGS_camera_fps,
-														 FLAGS_camera_parameter_folder, !FLAGS_frame_keep_distortion,
-														 (unsigned int) FLAGS_3d_views, FLAGS_flir_camera_index);
 	  // poseModel
 	  const auto poseModel = op::flagsToPoseModel(FLAGS_model_pose);
 	  // JSON saving
@@ -373,7 +368,7 @@ int openPoseDemo()
 
 	  // Initializing the user custom classes
 	  // Frames producer (e.g. video, webcam, ...)
-	  auto wUserInput = std::make_shared<WUserInput>(FLAGS_image_dir);
+	  auto wUserInput = std::make_shared<WUserInput>();
 	  // Add custom processing
 	  const auto workerInputOnNewThread = true;
 	  opWrapper.setWorkerInput(wUserInput, workerInputOnNewThread);
@@ -398,10 +393,7 @@ int openPoseDemo()
 	  const op::WrapperStructExtra wrapperStructExtra{
 		FLAGS_3d, FLAGS_3d_min_views, FLAGS_identification, FLAGS_tracking, FLAGS_ik_threads};
 	  // Producer (use default to disable any input)
-	  // const op::WrapperStructInput wrapperStructInput{producerSharedPtr, FLAGS_frame_first, FLAGS_frame_last,
-	  //                                                 FLAGS_process_real_time, FLAGS_frame_flip, FLAGS_frame_rotate,
-	  //                                                 FLAGS_frames_repeat};
-	  const op::WrapperStructInput wrapperStructInput;
+	  const op::WrapperStructInput wrapperStructInput; //this is default
 	  // Consumer (comment or use default argument to disable any output)
 	  const op::WrapperStructOutput wrapperStructOutput{
 		op::flagsToDisplayMode(FLAGS_display, FLAGS_3d), !FLAGS_no_gui_verbose, FLAGS_fullscreen,
