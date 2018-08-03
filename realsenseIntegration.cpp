@@ -65,6 +65,11 @@ DEFINE_double(render_threshold,         0.05,           "Only estimated keypoint
 DEFINE_double(alpha_pose,               0.6,            "Blending factor (range 0-1) for the body part rendering. 1 will show it completely, 0 will"
               " hide it. Only valid for GPU rendering.");
 
+template<typename T, size_t N>
+T * end(T (&ra)[N]) {
+  return ra + N;
+}
+
 int openPoseTutorialPose1()
 {
   try
@@ -136,12 +141,9 @@ int openPoseTutorialPose1()
       // Alternative: cv::imread(FLAGS_image_path, CV_LOAD_IMAGE_COLOR);
       while(true){
         const auto timerBegin = std::chrono::high_resolution_clock::now();
-
-        //read in frame from realsense
+        
         frames = pipe.wait_for_frames();
         rs2::frame color = frames.get_color_frame();
-        
-        //convert to mat
         cv::Mat inputImage(cv::Size(640, 480), CV_8UC3, (void*)color.get_data(), cv::Mat::AUTO_STEP);
         if(inputImage.empty())
           op::error("Could not get camera stream image", __LINE__, __FUNCTION__, __FILE__);
@@ -173,6 +175,19 @@ int openPoseTutorialPose1()
         // Show results
         frameDisplayer.displayFrame(outputImage, 0); // Alternative: cv::imshow(outputImage) + cv::waitKey(0)
       }
+      /*
+      // ------------------------- SHOWING RESULT AND CLOSING -------------------------
+      // Show results
+      frameDisplayer.displayFrame(outputImage, 0); // Alternative: cv::imshow(outputImage) + cv::waitKey(0)
+      // Measuring total time
+      const auto now = std::chrono::high_resolution_clock::now();
+      const auto totalTimeSec = (double)std::chrono::duration_cast<std::chrono::nanoseconds>(now-timerBegin).count()
+      * 1e-9;
+      const auto message = "OpenPose demo successfully finished. Total time: "
+      + std::to_string(totalTimeSec) + " seconds.";
+      op::log(message, op::Priority::High);
+      // Return successful message
+      */
       return 0;
     }
   catch (const std::exception& e)
