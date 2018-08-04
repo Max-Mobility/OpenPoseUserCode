@@ -162,7 +162,7 @@ endif (WIN32)
 #########################
 #test.cpp (siotest)
 #########################
-get_filename_component(SOURCE_NAME test.cpp NAME_WE)
+get_filename_component(SOURCE_NAME siotest.cpp NAME_WE)
 
 if (UNIX OR APPLE)
   set(EXE_NAME "${SOURCE_NAME}.bin")
@@ -171,7 +171,7 @@ elseif (WIN32)
 endif ()
 
 message(STATUS "Adding Example ${EXE_NAME}")
-add_executable(${EXE_NAME} test.cpp)
+add_executable(${EXE_NAME} siotest.cpp)
 target_link_libraries(${EXE_NAME}
   openpose
   ${examples_3rdparty_libraries}

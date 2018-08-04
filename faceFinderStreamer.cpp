@@ -17,7 +17,10 @@
 #include <opencv2/opencv.hpp>
 
 //include socket io simple streamer custom class
-#include "simpleStreamer.h"
+#include "includes/simpleStreamer.hpp"
+
+//include face detector custom class
+#include "includes/faceDetector.hpp"
 
 // See all the available parameter options withe the `--help` flag. E.g. `build/examples/openpose/openpose.bin --help`
 // Note: This command will show you flags for other unnecessary 3rdparty files. Check only the flags for the OpenPose
@@ -294,7 +297,7 @@ class WUserInput : public op::WorkerProducer<std::shared_ptr<std::vector<UserDat
 			  datum.spDepth = std::make_shared<rs2::depth_frame>(mFrames.get_depth_frame());
 
 			  // User Operations
-			  datum.cvInputData = detectFace(datum.cvInputData);
+			  mDetector.detect(datum.cvInputData);
 
 			  // If empty frame -> return nullptr
 			  if (datum.cvInputData.empty())
@@ -321,27 +324,9 @@ class WUserInput : public op::WorkerProducer<std::shared_ptr<std::vector<UserDat
   rs2::config mCfg;
   rs2::frameset mFrames;
   rs2::frame mColor;
-  cv::Mat detectFace(cv::Mat frame)
-  {
-	std::string face_cascade_name = "/home/jeb/opencv-3.4.2/data/haarcascades/haarcascade_frontalface_alt.xml";
-	cv::CascadeClassifier face_cascade;
-	face_cascade.load(face_cascade_name);
+  FaceDetector mDetector;
 
-	std::vector<cv::Rect> faces;
-	cv::Mat frame_gray;
 
-	cv::cvtColor(frame, frame_gray, CV_BGR2GRAY);
-	cv::equalizeHist(frame_gray, frame_gray);
-
-	face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(30,30));
-
-	for( size_t i = 0; i < faces.size(); i++ )
-	  {
-		cv::Point center( faces[i].x + faces[i].width*0.5, faces[i].y + faces[i].height*0.5 );
-		cv::ellipse( frame, center, cv::Size( faces[i].width*0.5, faces[i].height*0.5), 0, 0, 360, cv::Scalar( 255, 0, 255 ), 4, 8, 0 );
-	  }
-	return frame;
-  }
 
 };
 
